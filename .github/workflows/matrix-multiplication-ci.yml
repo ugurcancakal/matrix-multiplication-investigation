@@ -1,4 +1,4 @@
-name: Matrix Multiplication CI
+name: C++ CI with Clang on Ubuntu
 
 on:
   push:
@@ -22,12 +22,6 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build-artifacts
-          path: build/
-
   test:
     needs: build
     runs-on: ubuntu-latest
@@ -38,12 +32,8 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y cmake clang
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: build-artifacts
-          path: build/
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -S .
 
       - name: Test
-        working-directory: build
-        run: ctest --build-config Release
+        run: cmake --build build --target test --config Release
