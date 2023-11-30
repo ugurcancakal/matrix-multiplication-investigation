@@ -11,4 +11,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories(include)
 
 # Add an executable
-add_executable(matrix_multiply_baseline src/matrix_multiply_baseline.cpp)
+add_executable(matrix_multiply_baseline 
+    src/main.cpp 
+    src/matrix_multiply_baseline.cpp 
+    src/utils.cpp
+)
